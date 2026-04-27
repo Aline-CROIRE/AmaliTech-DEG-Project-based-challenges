@@ -151,4 +151,8 @@ Open two terminals and run the "Happy Path" command simultaneously. Terminal 2 w
 - **In-Memory Map**: Used for high-speed key-value lookups.
 - **EventEmitter**: Utilized to handle concurrent "In-Flight" requests without blocking the Node.js event loop.
 - **MVC Structure**: Organized into Controllers, Services, and Middleware for scalability.
-```
+  
+
+##  Deployed Link
+[Click here to view live API](https://finsafe-gateway.onrender.com/api-docs/)
+
