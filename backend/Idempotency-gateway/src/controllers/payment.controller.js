@@ -11,12 +11,16 @@ const processPayment = async (req, res) => {
     message: `Charged ${req.body.amount} ${req.body.currency}`,
   };
 
-  storage.set(key, {
+  const record = {
     status: 'COMPLETED',
     statusCode: 200,
     responseBody: responseBody,
     requestBody: req.body
-  });
+  };
+
+  storage.set(key, record);
+
+  const savedRecord = storage.get(key);
 
   logger.log({
     key,
@@ -25,6 +29,7 @@ const processPayment = async (req, res) => {
     response: responseBody
   });
 
+  res.set('X-Idempotency-Expiration', new Date(savedRecord.expiresAt).toISOString());
   res.status(200).json(responseBody);
 };
 

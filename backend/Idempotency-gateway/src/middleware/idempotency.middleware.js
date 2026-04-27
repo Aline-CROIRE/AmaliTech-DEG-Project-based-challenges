@@ -34,6 +34,7 @@ const idempotencyMiddleware = async (req, res, next) => {
     if (cachedRecord.status === 'COMPLETED') {
       logger.log({ key, action: 'CACHE_HIT', payload: req.body });
       res.set('X-Cache-Hit', 'true');
+      res.set('X-Idempotency-Expiration', new Date(cachedRecord.expiresAt).toISOString());
       return res.status(cachedRecord.statusCode).json(cachedRecord.responseBody);
     }
   }
