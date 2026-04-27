@@ -1,0 +1,14 @@
+{
+  "name": "idempotency-gateway",
+  "version": "1.0.0",
+  "description": "Idempotency Gateway for FinSafe Transactions Ltd.",
+  "main": "src/app.js",
+  "scripts": {
+    "start": "node src/app.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.0"
+  }
+}
