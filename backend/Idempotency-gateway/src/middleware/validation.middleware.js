@@ -6,7 +6,7 @@ const validatePaymentBody = (req, res, next) => {
   }
 
   if (!currency || typeof currency !== 'string' || currency.length !== 3) {
-    return res.status(422).json({ error: 'Invalid currency. Must be a 3-letter ISO code (e.g., GHS).' });
+    return res.status(422).json({ error: 'Invalid currency. Must be a 3-letter ISO code (e.g., FRW).' });
   }
 
   next();
