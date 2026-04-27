@@ -2,14 +2,26 @@ const express = require('express');
 const swaggerUi = require('swagger-ui-express');
 const swaggerSpec = require('./config/swagger');
 const paymentRoutes = require('./routes/payment.routes');
+const logger = require('./services/logger.service');
 
 const app = express();
 const PORT = 3000;
 
 app.use(express.json());
 
+app.use((err, req, res, next) => {
+  if (err instanceof SyntaxError && err.status === 400 && 'body' in err) {
+    return res.status(400).json({ error: 'Invalid JSON payload provided.' });
+  }
+  next();
+});
+
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use('/', paymentRoutes);
+
+app.get('/audit-logs', (req, res) => {
+  res.status(200).json(logger.getLogs());
+});
 
 app.get('/health', (req, res) => {
   res.status(200).json({ status: 'UP' });

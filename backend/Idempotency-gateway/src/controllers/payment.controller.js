@@ -1,4 +1,5 @@
 const storage = require('../services/storage.service');
+const logger = require('../services/logger.service');
 
 const processPayment = async (req, res) => {
   const key = req.headers['idempotency-key'];
@@ -15,6 +16,13 @@ const processPayment = async (req, res) => {
     statusCode: 200,
     responseBody: responseBody,
     requestBody: req.body
+  });
+
+  logger.log({
+    key,
+    action: 'PAYMENT_PROCESSED',
+    payload: req.body,
+    response: responseBody
   });
 
   res.status(200).json(responseBody);
