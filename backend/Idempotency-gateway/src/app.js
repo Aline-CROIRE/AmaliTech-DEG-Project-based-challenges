@@ -2,7 +2,7 @@ const express = require('express');
 const swaggerUi = require('swagger-ui-express');
 const swaggerSpec = require('./config/swagger');
 const paymentRoutes = require('./routes/payment.routes');
-const logger = require('./services/logger.service');
+const monitoringRoutes = require('./routes/monitoring.routes');
 
 const app = express();
 const PORT = 3000;
@@ -17,15 +17,9 @@ app.use((err, req, res, next) => {
 });
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
 app.use('/', paymentRoutes);
-
-app.get('/audit-logs', (req, res) => {
-  res.status(200).json(logger.getLogs());
-});
-
-app.get('/health', (req, res) => {
-  res.status(200).json({ status: 'UP' });
-});
+app.use('/', monitoringRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
