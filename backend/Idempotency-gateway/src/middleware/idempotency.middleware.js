@@ -1,6 +1,6 @@
 const storage = require('../services/storage.service');
 
-const idempotencyMiddleware = (req, res, next) => {
+const idempotencyMiddleware = async (req, res, next) => {
   const key = req.headers['idempotency-key'];
 
   if (!key) {
@@ -8,7 +8,7 @@ const idempotencyMiddleware = (req, res, next) => {
   }
 
   if (storage.has(key)) {
-    const cachedRecord = storage.get(key);
+    let cachedRecord = storage.get(key);
 
     const incomingBody = JSON.stringify(req.body);
     const storedBody = JSON.stringify(cachedRecord.requestBody);
@@ -19,11 +19,20 @@ const idempotencyMiddleware = (req, res, next) => {
       });
     }
 
+    if (cachedRecord.status === 'PROCESSING') {
+      cachedRecord = await storage.waitForCompletion(key);
+    }
+
     if (cachedRecord.status === 'COMPLETED') {
       res.set('X-Cache-Hit', 'true');
       return res.status(cachedRecord.statusCode).json(cachedRecord.responseBody);
     }
   }
+
+  storage.set(key, {
+    status: 'PROCESSING',
+    requestBody: req.body
+  });
 
   next();
 };
