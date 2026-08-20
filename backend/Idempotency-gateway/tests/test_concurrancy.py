@@ -25,7 +25,7 @@ async def test_concurrent_in_flight_requests_executed_once():
     with patch.object(payment_service, "process_payment", side_effect=mock_process):
         async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as client:
             headers = {"Idempotency-Key": "concurrent-key-999"}
-            payload = {"amount": 300, "currency": "GHS"}
+            payload = {"amount": 300, "currency": "RWF"}
 
             tasks = [
                 client.post("/process-payment", headers=headers, json=payload)

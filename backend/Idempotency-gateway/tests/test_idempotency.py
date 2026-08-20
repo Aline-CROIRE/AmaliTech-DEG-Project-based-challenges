@@ -34,14 +34,14 @@ async def test_same_key_different_body_returns_conflict():
         res1 = await client.post(
             "/process-payment",
             headers=headers,
-            json={"amount": 100, "currency": "GHS"}
+            json={"amount": 100, "currency": "RWF"}
         )
         assert res1.status_code == 200
 
         res2 = await client.post(
             "/process-payment",
             headers=headers,
-            json={"amount": 500, "currency": "GHS"}
+            json={"amount": 500, "currency": "RWF"}
         )
         assert res2.status_code == 409
         assert res2.json()["detail"] == "Idempotency key already used for a different request body."
