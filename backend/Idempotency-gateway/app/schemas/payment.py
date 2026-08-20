@@ -32,12 +32,12 @@ class PaymentRequest(BaseModel):
 
 
 class PaymentResponse(BaseModel):
-    message: str = Field(description="Human-readable status message", examples=["Charged 100 GHS"])
-    amount: float = Field(examples=[100.00])
-    currency: str = Field(examples=["GHS"])
-    transaction_id: str = Field(description="Unique payment transaction ID", examples=["tx_abc12345"])
-    status: str = Field(description="Transaction status", examples=["SUCCESS"])
+    message: str = Field(..., description="Human-readable status message", examples=["Charged 100 GHS"])
+    amount: float = Field(..., examples=[100.00])
+    currency: str = Field(..., examples=["GHS"])
+    transaction_id: str = Field(..., description="Unique payment transaction ID", examples=["tx_abc12345"])
+    status: str = Field(..., description="Transaction status", examples=["SUCCESS"])
 
 
 class ErrorResponse(BaseModel):
-    detail: str = Field(description="Error message explaining the failure")
+    detail: str = Field(..., description="Error message explaining the failure")
