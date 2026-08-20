@@ -1,14 +1,15 @@
 from pydantic import BaseModel, Field, field_validator
-from typing import Optional
 
 
 class PaymentRequest(BaseModel):
     amount: float = Field(
+        ...,
         gt=0,
         description="The payment amount (must be greater than 0)",
         examples=[100.00]
     )
     currency: str = Field(
+        ...,
         min_length=3,
         max_length=3,
         description="3-letter ISO currency code (e.g. GHS, USD)",
@@ -31,7 +32,7 @@ class PaymentRequest(BaseModel):
 
 
 class PaymentResponse(BaseModel):
-    message: str = Field( description="Human-readable status message", examples=["Charged 100 GHS"])
+    message: str = Field(description="Human-readable status message", examples=["Charged 100 GHS"])
     amount: float = Field(examples=[100.00])
     currency: str = Field(examples=["GHS"])
     transaction_id: str = Field(description="Unique payment transaction ID", examples=["tx_abc12345"])
