@@ -134,8 +134,10 @@ idempotency-gateway/
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/YOUR-USERNAME/Idempotency-Gateway.git
+   git clone https://github.com/Aline-CROIRE/AmaliTech-DEG-Project-based-challenges.git
+   cd backend
    cd Idempotency-Gateway
+  
    ```
 
 2. **Create and activate a virtual environment**:
@@ -271,6 +273,3 @@ We implemented a **Time-To-Live (TTL)** key expiration strategy (`InMemoryIdempo
 2. **Database Persistence**: Store key fingerprints in PostgreSQL alongside primary billing records.
 3. **Client-Scoped Keys**: Bind keys to API client IDs (`Client-ID + Idempotency-Key`) to prevent key collisions between different merchants.
 ```
-
----
-
