@@ -1,11 +1,13 @@
-
 # FinSafe Idempotency Gateway ("Pay-Once" Protocol)
 
 [![Python](https://img.shields.io/badge/Python-3.10%2B-blue.svg)](https://www.python.org/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.110%2B-009688.svg)](https://fastapi.tiangolo.com/)
 [![Tests](https://img.shields.io/badge/Tests-Pytest-success.svg)](https://docs.pytest.org/)
+[![Deployment](https://img.shields.io/badge/Deployment-Vercel-black.svg?logo=vercel)](https://amali-tech-deg-project-based-challe-zeta.vercel.app/docs)
 
 An enterprise-grade, concurrency-safe Idempotency Layer built with **Python** and **FastAPI**. Designed for fintech payment gateways to guarantee **exactly-once execution** of payment transactions despite network retries, duplicate submissions, or simultaneous in-flight requests.
+
+ **Live Interactive API Documentation (Swagger UI)**: [https://amali-tech-deg-project-based-challe-zeta.vercel.app/docs](https://amali-tech-deg-project-based-challe-zeta.vercel.app/docs)
 
 ---
 
@@ -28,7 +30,7 @@ In payment processing systems, network latency or timeouts cause e-commerce clie
 - **In-Flight Concurrency Protection**: Blocks duplicate simultaneous requests using per-key `asyncio.Event` objects until the primary request finishes.
 - **Response Caching**: Saves status codes and response bodies, returning `X-Cache-Hit: true` on cached replays.
 - **Developer's Choice (Key TTL Expiration)**: Automatically expires cached keys after a configurable Time-To-Live (default 24 hours) to prevent memory leak growth in production.
-- **Interactive OpenAPI / Swagger Documentation**: Available out-of-the-box at `/docs`.
+- **Interactive OpenAPI / Swagger Documentation**: Hosted live at `/docs`.
 
 ---
 
@@ -84,6 +86,7 @@ sequenceDiagram
 - **Framework**: FastAPI
 - **Data Validation**: Pydantic v2
 - **ASGI Server**: Uvicorn
+- **Deployment Platform**: Vercel Serverless
 - **Testing Framework**: pytest & pytest-asyncio
 - **HTTP Client**: httpx
 
@@ -119,25 +122,26 @@ idempotency-gateway/
 │   └── test_concurrency.py      # Multi-request in-flight concurrency tests
 ├── .gitignore
 ├── requirements.txt
+├── vercel.json                  # Vercel deployment configuration
 └── README.md
 ```
 
 ---
 
-## 6. Local Setup & Execution
+## 6. Live Demo & Local Setup
 
-### Prerequisites
-- Python 3.10 or higher
-- Git
+### Live Production Deployment
+- **Swagger UI API Documentation**: [https://amali-tech-deg-project-based-challe-zeta.vercel.app/docs](https://amali-tech-deg-project-based-challe-zeta.vercel.app/docs)
+- **ReDoc Interactive Documentation**: [https://amali-tech-deg-project-based-challe-zeta.vercel.app/redoc](https://amali-tech-deg-project-based-challe-zeta.vercel.app/redoc)
 
-### Installation Steps
+---
+
+### Local Installation Steps
 
 1. **Clone the repository**:
    ```bash
    git clone https://github.com/Aline-CROIRE/AmaliTech-DEG-Project-based-challenges.git
-   cd backend
-   cd Idempotency-Gateway
-  
+   cd backend/Idempotency-gateway
    ```
 
 2. **Create and activate a virtual environment**:
@@ -161,12 +165,12 @@ idempotency-gateway/
    pip install -r requirements.txt
    ```
 
-4. **Run the server**:
+4. **Run the server locally**:
    ```bash
    uvicorn app.main:app --reload
    ```
 
-5. **Access Interactive Documentation**:
+5. **Access Local Documentation**:
    - Swagger UI: `http://127.0.0.1:8000/docs`
    - ReDoc: `http://127.0.0.1:8000/redoc`
 
@@ -212,9 +216,9 @@ Occurs when reusing an existing key with a modified body.
 }
 ```
 
-#### cURL Example
+#### cURL Example (Live Production)
 ```bash
-curl -X POST "http://127.0.0.1:8000/process-payment" \
+curl -X POST "https://amali-tech-deg-project-based-challe-zeta.vercel.app/process-payment" \
      -H "Content-Type: application/json" \
      -H "Idempotency-Key: unique-key-001" \
      -d '{"amount": 100.00, "currency": "RWF"}'
