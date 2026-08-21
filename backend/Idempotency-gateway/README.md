@@ -273,6 +273,3 @@ We implemented a **Time-To-Live (TTL)** key expiration strategy (`InMemoryIdempo
 2. **Database Persistence**: Store key fingerprints in PostgreSQL alongside primary billing records.
 3. **Client-Scoped Keys**: Bind keys to API client IDs (`Client-ID + Idempotency-Key`) to prevent key collisions between different merchants.
 ```
-
----
-
