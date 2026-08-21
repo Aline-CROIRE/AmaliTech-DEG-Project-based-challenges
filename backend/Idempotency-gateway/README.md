@@ -134,6 +134,9 @@ idempotency-gateway/
 
 1. **Clone the repository**:
    ```bash
+   git clone https://github.com/Aline-CROIRE/AmaliTech-DEG-Project-based-challenges.git
+   cd backend
+   cd Idempotency-Gateway
   
    ```
 
